@@ -47,30 +47,4 @@ This project implements a high-frequency trading (HFT) order book system utilizi
 
 ### Data Flow Diagram
 
-```plaintext
-                          +-------------------------+
-                          |       Market Data       |
-                          +-----------+-------------+
-                                      |
-                                      v
-                          +-------------------------+
-                          |   FPGA (Market Data     |
-                          |   Handler)              |
-                          +-------------------------+
-                                      |
-                                      v
-+-------------------------+           +------------+           +-------------------------+
-|       Orders            |           |  PCIe/DMA  |           |        Execution        |
-|     +-----------+       |           +------------+           |        Reporting        |
-|     | Network   |       |           |           |           |        Logging          |
-|     | Interface |       |           v           |           |                         |
-|     +-----------+       |           +-------------------------+                         |
-|                         |<--------->|      CPU (C++)          |<--------->|   Market    |
-|    FPGA (Order          |  +------->|  Order Management       |           +-------------------------+
-|    Entry Handler)       |           |  System (OMS)           |
-+-------------------------+           |  - Order Book           |
-                                      |  - Matching Engine      |
-                                      |  - Risk Checks          |
-                                      |  - Trade Execution      |
-                                      |                         |
-                                      +-------------------------+
+<img width="746" alt="image" src="https://github.com/Kodoh/Orderbook/assets/45899701/e8564ae6-0d79-41f2-94c5-28070c45c8ca">
