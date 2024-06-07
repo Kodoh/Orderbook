@@ -4,6 +4,9 @@
 #include <iostream>
 #include <algorithm> // for std::remove
 
+
+
+static int sNextId = 0;
 class Order {
 public:
     enum Type { BUY, SELL };
@@ -11,8 +14,7 @@ public:
     double price;
     int quantity;
     std::time_t timestamp;
-    int orderId;
-
+    int orderId = sNextId++;
     bool operator==(const Order& other) const {
         return orderId == other.orderId;                // for std::remove (using ID as comparator)
     }
@@ -98,9 +100,9 @@ int main() {
     OrderBook orderBook;
     
     
-    Order order1 = { Order::BUY, 100.5, 10, std::time(0), 1 };
-    Order order2 = { Order::SELL, 100.5, 10, std::time(0), 2 };
-    Order order3 = { Order::BUY, 90.5, 10, std::time(0), 3 };
+    Order order1 = { Order::BUY, 100.5, 10, std::time(0)};
+    Order order2 = { Order::SELL, 100.5, 10, std::time(0)};
+    Order order3 = { Order::BUY, 90.5, 10, std::time(0)};
 
     orderBook.addOrder(order1);
     orderBook.dispBids();
