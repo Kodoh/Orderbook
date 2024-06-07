@@ -2,6 +2,7 @@
 #include <map>
 #include <deque>
 #include <iostream>
+#include <algorithm> // for std::remove
 
 class Order {
 public:
@@ -11,6 +12,10 @@ public:
     int quantity;
     std::time_t timestamp;
     int orderId;
+
+    bool operator==(const Order& other) const {
+        return orderId == other.orderId;                // for std::remove (using ID as comparator)
+    }
 };
 
 class OrderBook {
@@ -72,4 +77,38 @@ public:
         // Update the order book and generate trade records
         std::cout << "Trade executed: " << quantity << " @ " << askOrder.price << std::endl;
     }
+
+    void dispBids() {
+        for (auto& t : bids)
+            std::cout << t.first << "\n";
+    }
+
+
+    void dispAsks() {
+        for (auto& t : asks)
+            std::cout << t.first << "\n";
+    }    
+
 };
+
+int main() {
+
+    // Testing 
+
+    OrderBook orderBook;
+    
+    
+    Order order1 = { Order::BUY, 100.5, 10, std::time(0), 1 };
+    Order order2 = { Order::SELL, 100.5, 10, std::time(0), 2 };
+    Order order3 = { Order::BUY, 90.5, 10, std::time(0), 3 };
+
+    orderBook.addOrder(order1);
+    orderBook.dispBids();
+    orderBook.addOrder(order2);
+    orderBook.addOrder(order3);
+    orderBook.dispBids();
+
+    orderBook.removeOrder(order1);
+
+    return 0;
+}
