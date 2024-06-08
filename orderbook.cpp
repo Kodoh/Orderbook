@@ -4,9 +4,8 @@
 #include <iostream>
 #include <algorithm> // for std::remove
 
-
-
 static int sNextId = 0;
+
 class Order {
 public:
     enum Type { BUY, SELL };
@@ -15,17 +14,21 @@ public:
     int quantity;
     std::time_t timestamp;
     int orderId = sNextId++;
+
     bool operator==(const Order& other) const {
-        return orderId == other.orderId;                // for std::remove (using ID as comparator)
+        return orderId == other.orderId; // for std::remove (using ID as comparator)
     }
 };
 
 class OrderBook {
 private:
+    std::string allocation; // FIFO / PRORATA
     std::map<double, std::deque<Order>> bids; // Buy orders
     std::map<double, std::deque<Order>> asks; // Sell orders
 
 public:
+    OrderBook(const std::string& allocation) : allocation(allocation) {}
+
     void addOrder(const Order& order) {
         if (order.type == Order::BUY) {
             bids[order.price].push_back(order);
@@ -53,64 +56,109 @@ public:
             auto lowestAsk = asks.begin();   // Lowest ask price
 
             if (highestBid->first >= lowestAsk->first) {
-                auto& bidOrders = highestBid->second;
-                auto& askOrders = lowestAsk->second;
-                Order& bidOrder = bidOrders.front();
-                Order& askOrder = askOrders.front();
+                if (allocation == "PRORATA") {
+                    matchOrdersProRata(highestBid->second, lowestAsk->second);
+                } else {
+                    matchOrdersFIFO(highestBid->second, lowestAsk->second);
+                }
 
-                int tradeQuantity = std::min(bidOrder.quantity, askOrder.quantity);
-                executeTrade(bidOrder, askOrder, tradeQuantity);
-
-                bidOrder.quantity -= tradeQuantity;
-                askOrder.quantity -= tradeQuantity;
-
-                if (bidOrder.quantity == 0) bidOrders.pop_front();
-                if (askOrder.quantity == 0) askOrders.pop_front();
-
-                if (bidOrders.empty()) bids.erase(highestBid->first);
-                if (askOrders.empty()) asks.erase(lowestAsk->first);
+                if (highestBid->second.empty()) bids.erase(highestBid->first);
+                if (lowestAsk->second.empty()) asks.erase(lowestAsk->first);
             } else {
                 break;
             }
         }
     }
 
+    void matchOrdersFIFO(std::deque<Order>& bidOrders, std::deque<Order>& askOrders) {
+        while (!bidOrders.empty() && !askOrders.empty()) {
+            Order& bidOrder = bidOrders.front();
+            Order& askOrder = askOrders.front();
+
+            int tradeQuantity = std::min(bidOrder.quantity, askOrder.quantity);
+            executeTrade(bidOrder, askOrder, tradeQuantity);
+
+            bidOrder.quantity -= tradeQuantity;
+            askOrder.quantity -= tradeQuantity;
+
+            if (bidOrder.quantity == 0) bidOrders.pop_front();
+            if (askOrder.quantity == 0) askOrders.pop_front();
+        }
+    }
+
+    void matchOrdersProRata(std::deque<Order>& bidOrders, std::deque<Order>& askOrders) {
+        int totalBidQuantity = 0;
+        for (const auto& bid : bidOrders) {
+            totalBidQuantity += bid.quantity;
+        }
+
+        int totalAskQuantity = 0;
+        for (const auto& ask : askOrders) {
+            totalAskQuantity += ask.quantity;
+        }
+
+        int tradeQuantity = std::min(totalBidQuantity, totalAskQuantity);
+
+        auto allocateQuantity = [&](std::deque<Order>& orders, int totalQuantity) {
+            for (auto& order : orders) {
+                int allocation = (order.quantity * tradeQuantity) / totalQuantity;
+                if (allocation > 0) {
+                    order.quantity -= allocation;
+                    executeTrade(order, orders.front(), allocation); // Temporary order as the counterparty for now
+                    if (order.quantity == 0) {
+                        orders.pop_front();
+                    }
+                }
+            }
+        };
+
+        allocateQuantity(bidOrders, totalBidQuantity);
+        allocateQuantity(askOrders, totalAskQuantity);
+    }
+
     void executeTrade(Order& bidOrder, Order& askOrder, int quantity) {
-        // Update the order book and generate trade records
-        std::cout << "Trade executed: " << quantity << " @ " << askOrder.price << std::endl;
+        std::cout << "Trade executed: " << quantity << " @ " << askOrder.price << " (Bid ID: " << bidOrder.orderId << ", Ask ID: " << askOrder.orderId << ")" << std::endl;
     }
 
     void dispBids() {
-        for (auto& t : bids)
-            std::cout << t.first << "\n";
+        for (const auto& bid : bids) {
+            std::cout << "Price: " << bid.first << "\n";
+            for (const auto& order : bid.second) {
+                std::cout << "  Order ID: " << order.orderId << ", Quantity: " << order.quantity << ", Timestamp: " << order.timestamp << "\n";
+            }
+        }
     }
 
-
     void dispAsks() {
-        for (auto& t : asks)
-            std::cout << t.first << "\n";
-    }    
-
+        for (const auto& ask : asks) {
+            std::cout << "Price: " << ask.first << "\n";
+            for (const auto& order : ask.second) {
+                std::cout << "  Order ID: " << order.orderId << ", Quantity: " << order.quantity << ", Timestamp: " << order.timestamp << "\n";
+            }
+        }
+    }
 };
 
 int main() {
+    // Testing
 
-    // Testing 
+    OrderBook orderBook("PRORATA");
 
-    OrderBook orderBook;
-    
-    
-    Order order1 = { Order::BUY, 100.5, 10, std::time(0)};
-    Order order2 = { Order::SELL, 100.5, 10, std::time(0)};
-    Order order3 = { Order::BUY, 90.5, 10, std::time(0)};
+    Order order1 = { Order::SELL, 100.5, 5, std::time(0) };
+    Order order2 = { Order::SELL, 100.5, 15, std::time(0) };
+    Order order3 = { Order::SELL, 100.5, 10, std::time(0) };
+    Order order4 = { Order::BUY, 100.5, 20, std::time(0) };
 
     orderBook.addOrder(order1);
-    orderBook.dispBids();
     orderBook.addOrder(order2);
     orderBook.addOrder(order3);
+    orderBook.addOrder(order4);
+
+    std::cout << "Bids:\n";
     orderBook.dispBids();
 
-    orderBook.removeOrder(order1);
+    std::cout << "\nAsks:\n";
+    orderBook.dispAsks();
 
     return 0;
 }
