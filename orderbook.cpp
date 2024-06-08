@@ -1,4 +1,4 @@
-#include <ctime>
+#include <chrono>       // milliseconds better than seconds 
 #include <map>
 #include <deque>
 #include <iostream>
@@ -12,12 +12,18 @@ public:
     Type type;
     double price;
     int quantity;
-    std::time_t timestamp;
+    uint64_t timestamp = timeSinceEpochMillisec();
     int orderId = sNextId++;
 
     bool operator==(const Order& other) const {
         return orderId == other.orderId; // for std::remove (using ID as comparator)
     }
+
+    uint64_t timeSinceEpochMillisec() {
+        using namespace std::chrono;
+        return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+    }
+    
 };
 
 class OrderBook {
@@ -144,10 +150,10 @@ int main() {
 
     OrderBook orderBook("PRORATA");
 
-    Order order1 = { Order::SELL, 100.5, 5, std::time(0) };
-    Order order2 = { Order::SELL, 100.5, 15, std::time(0) };
-    Order order3 = { Order::SELL, 100.5, 10, std::time(0) };
-    Order order4 = { Order::BUY, 100.5, 20, std::time(0) };
+    Order order1 = { Order::SELL, 100.5, 5 };
+    Order order2 = { Order::SELL, 100.5, 15, };
+    Order order3 = { Order::SELL, 100.5, 10 };
+    Order order4 = { Order::BUY, 100.5, 20 };
 
     orderBook.addOrder(order1);
     orderBook.addOrder(order2);
