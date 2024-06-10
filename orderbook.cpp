@@ -1,5 +1,7 @@
-#include <chrono>       // milliseconds better than seconds 
+#include <chrono> // milliseconds better than seconds 
 #include <map>
+#include <limits.h>
+#include <stdio.h>
 #include <deque>
 #include <iostream>
 #include <algorithm> // for std::remove
@@ -9,21 +11,21 @@ static int sNextId = 0;
 class Order {
 public:
     enum Type { BUY, SELL };
+    enum OrderType { MARKET_ORDER, LIMIT_ORDER, STOP_LOSS, ICEBERG, TRAILING_STOP, QUOTE};
     Type type;
-    double price;
+    OrderType orderType { LIMIT_ORDER };
     int quantity;
+    double price { };
     uint64_t timestamp = timeSinceEpochMillisec();
     int orderId = sNextId++;
-
     bool operator==(const Order& other) const {
         return orderId == other.orderId; // for std::remove (using ID as comparator)
     }
 
-    uint64_t timeSinceEpochMillisec() {
+    static uint64_t timeSinceEpochMillisec() {
         using namespace std::chrono;
         return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
     }
-    
 };
 
 class OrderBook {
@@ -35,7 +37,13 @@ private:
 public:
     OrderBook(const std::string& allocation) : allocation(allocation) {}
 
-    void addOrder(const Order& order) {
+    void addOrder(Order order) {
+        if (order.type == Order::BUY && order.orderType == Order::MARKET_ORDER) {
+            order.price = (!asks.empty()) ? asks.begin()->first : std::numeric_limits<double>::max();
+        } else if (order.type == Order::SELL && order.orderType == Order::MARKET_ORDER) {
+            order.price = (!bids.empty()) ? bids.rbegin()->first : std::numeric_limits<double>::lowest();
+        }
+
         if (order.type == Order::BUY) {
             bids[order.price].push_back(order);
         } else {
@@ -150,10 +158,10 @@ int main() {
 
     OrderBook orderBook("PRORATA");
 
-    Order order1 = { Order::SELL, 100.5, 5 };
-    Order order2 = { Order::SELL, 100.5, 15, };
-    Order order3 = { Order::SELL, 100.5, 10 };
-    Order order4 = { Order::BUY, 100.5, 20 };
+    Order order1 = { Order::SELL, Order::LIMIT_ORDER, 5, 100.5 };
+    Order order2 = { Order::SELL, Order::LIMIT_ORDER, 15, 100.5 };
+    Order order3 = { Order::SELL, Order::LIMIT_ORDER, 10, 100.5 };
+    Order order4 = { Order::BUY, Order::MARKET_ORDER, 20 };
 
     orderBook.addOrder(order1);
     orderBook.addOrder(order2);
