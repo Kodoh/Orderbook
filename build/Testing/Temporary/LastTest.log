@@ -1,0 +1,33 @@
+Start testing: Jun 11 14:18 BST
+----------------------------------------------------------
+1/1 Testing: OrderBookTest
+1/1 Test: OrderBookTest
+Command: "/Users/jakeanderson/projects/Orderbook/build/OrderBookTest"
+Directory: /Users/jakeanderson/projects/Orderbook/build
+"OrderBookTest" start time: Jun 11 14:18 BST
+Output:
+----------------------------------------------------------
+[==========] Running 3 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 3 tests from OrderBookTest
+[ RUN      ] OrderBookTest.AddBuyOrder
+[       OK ] OrderBookTest.AddBuyOrder (0 ms)
+[ RUN      ] OrderBookTest.AddSellOrder
+[       OK ] OrderBookTest.AddSellOrder (0 ms)
+[ RUN      ] OrderBookTest.MatchOrders
+Trade executed: 10 @ 100.5 (Bid ID: 2, Ask ID: 3)
+[       OK ] OrderBookTest.MatchOrders (0 ms)
+[----------] 3 tests from OrderBookTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 3 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 3 tests.
+<end of output>
+Test time =   0.15 sec
+----------------------------------------------------------
+Test Passed.
+"OrderBookTest" end time: Jun 11 14:18 BST
+"OrderBookTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 11 14:18 BST
