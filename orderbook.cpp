@@ -11,11 +11,12 @@ static int sNextId = 0;
 class Order {
 public:
     enum Type { BUY, SELL };
-    enum OrderType { MARKET_ORDER, LIMIT_ORDER, STOP_LOSS, ICEBERG, TRAILING_STOP, QUOTE};
+    enum OrderType { MARKET, LIMIT, STOP};
     Type type;
-    OrderType orderType { LIMIT_ORDER };
+    OrderType orderType { LIMIT };
     int quantity;
     double price { };
+    double stopPrice { };
     uint64_t timestamp = timeSinceEpochMillisec();
     int orderId = sNextId++;
     bool operator==(const Order& other) const {
@@ -33,22 +34,26 @@ private:
     std::string allocation; // FIFO / PRORATA
     std::map<double, std::deque<Order>> bids; // Buy orders
     std::map<double, std::deque<Order>> asks; // Sell orders
+    std::deque<Order> stopOrders; // Queue for stop orders
 
 public:
     OrderBook(const std::string& allocation) : allocation(allocation) {}
 
     void addOrder(Order order) {
-        if (order.type == Order::BUY && order.orderType == Order::MARKET_ORDER) {
-            order.price = (!asks.empty()) ? asks.begin()->first : std::numeric_limits<double>::max();
-        } else if (order.type == Order::SELL && order.orderType == Order::MARKET_ORDER) {
-            order.price = (!bids.empty()) ? bids.rbegin()->first : std::numeric_limits<double>::lowest();
+        if (order.orderType == Order::STOP) {
+            stopOrders.push_back(order);
         }
-
+        if (order.type == Order::BUY && order.orderType == Order::MARKET) {
+            order.price = (!asks.empty()) ? asks.begin()->first : std::numeric_limits<double>::max();
+        } else if (order.type == Order::SELL && order.orderType == Order::MARKET) {
+            order.price = (!bids.empty()) ? bids.rbegin()->first : std::numeric_limits<double>::lowest();
+        } 
         if (order.type == Order::BUY) {
             bids[order.price].push_back(order);
         } else {
             asks[order.price].push_back(order);
         }
+        checkStopOrders();
         matchOrders();
     }
 
@@ -62,6 +67,27 @@ public:
                 book.erase(it);
             }
         }
+    }
+
+    void checkStopOrders() {
+        for (auto it = stopOrders.begin(); it != stopOrders.end();) {
+            if ((it->type == Order::BUY && it->stopPrice <= getLowestAskPrice()) ||
+                (it->type == Order::SELL && it->stopPrice >= getHighestBidPrice())) {
+                it->orderType = Order::MARKET;
+                addOrder(*it);
+                it = stopOrders.erase(it);
+            } else {
+                ++it;
+            }
+        }
+    }
+
+    double getLowestAskPrice() const {
+        return asks.empty() ? std::numeric_limits<double>::max() : asks.begin()->first;
+    }
+
+    double getHighestBidPrice() const {
+        return bids.empty() ? 0.0 : bids.rbegin()->first;
     }
 
     void matchOrders() {
@@ -158,10 +184,10 @@ int main() {
 
     OrderBook orderBook("PRORATA");
 
-    Order order1 = { Order::SELL, Order::LIMIT_ORDER, 5, 100.5 };
-    Order order2 = { Order::SELL, Order::LIMIT_ORDER, 15, 100.5 };
-    Order order3 = { Order::SELL, Order::LIMIT_ORDER, 10, 100.5 };
-    Order order4 = { Order::BUY, Order::MARKET_ORDER, 20 };
+    Order order1 = { Order::SELL, Order::LIMIT, 5, 100.5 };
+    Order order2 = { Order::SELL, Order::LIMIT, 15, 100.5 };
+    Order order3 = { Order::SELL, Order::LIMIT, 10, 100.5 };
+    Order order4 = { Order::BUY, Order::MARKET, 20 };
 
     orderBook.addOrder(order1);
     orderBook.addOrder(order2);
