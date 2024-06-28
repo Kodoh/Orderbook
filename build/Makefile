@@ -185,19 +185,6 @@ OrderBookMain/fast:
 .PHONY : OrderBookMain/fast
 
 #=============================================================================
-# Target rules for targets named OrderBookTest
-
-# Build rule for target.
-OrderBookTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 OrderBookTest
-.PHONY : OrderBookTest
-
-# fast build rule for target.
-OrderBookTest/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/build
-.PHONY : OrderBookTest/fast
-
-#=============================================================================
 # Target rules for targets named gmock
 
 # Build rule for target.
@@ -249,6 +236,19 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make googletest-build/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+#=============================================================================
+# Target rules for targets named OrderBookTest
+
+# Build rule for target.
+OrderBookTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 OrderBookTest
+.PHONY : OrderBookTest
+
+# fast build rule for target.
+OrderBookTest/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/OrderBookTest.dir/build.make tests/CMakeFiles/OrderBookTest.dir/build
+.PHONY : OrderBookTest/fast
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -279,7 +279,6 @@ src/orderbook.o: src/orderbook.cpp.o
 # target to build an object file
 src/orderbook.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookMain.dir/build.make CMakeFiles/OrderBookMain.dir/src/orderbook.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/src/orderbook.cpp.o
 .PHONY : src/orderbook.cpp.o
 
 src/orderbook.i: src/orderbook.cpp.i
@@ -288,7 +287,6 @@ src/orderbook.i: src/orderbook.cpp.i
 # target to preprocess a source file
 src/orderbook.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookMain.dir/build.make CMakeFiles/OrderBookMain.dir/src/orderbook.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/src/orderbook.cpp.i
 .PHONY : src/orderbook.cpp.i
 
 src/orderbook.s: src/orderbook.cpp.s
@@ -297,32 +295,7 @@ src/orderbook.s: src/orderbook.cpp.s
 # target to generate assembly for a file
 src/orderbook.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookMain.dir/build.make CMakeFiles/OrderBookMain.dir/src/orderbook.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/src/orderbook.cpp.s
 .PHONY : src/orderbook.cpp.s
-
-tests/orderbook_test.o: tests/orderbook_test.cpp.o
-.PHONY : tests/orderbook_test.o
-
-# target to build an object file
-tests/orderbook_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/tests/orderbook_test.cpp.o
-.PHONY : tests/orderbook_test.cpp.o
-
-tests/orderbook_test.i: tests/orderbook_test.cpp.i
-.PHONY : tests/orderbook_test.i
-
-# target to preprocess a source file
-tests/orderbook_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/tests/orderbook_test.cpp.i
-.PHONY : tests/orderbook_test.cpp.i
-
-tests/orderbook_test.s: tests/orderbook_test.cpp.s
-.PHONY : tests/orderbook_test.s
-
-# target to generate assembly for a file
-tests/orderbook_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/tests/orderbook_test.cpp.s
-.PHONY : tests/orderbook_test.cpp.s
 
 # Help Target
 help:
@@ -349,9 +322,6 @@ help:
 	@echo "... src/orderbook.o"
 	@echo "... src/orderbook.i"
 	@echo "... src/orderbook.s"
-	@echo "... tests/orderbook_test.o"
-	@echo "... tests/orderbook_test.i"
-	@echo "... tests/orderbook_test.s"
 .PHONY : help
 
 

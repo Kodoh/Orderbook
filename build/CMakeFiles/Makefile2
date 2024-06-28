@@ -64,17 +64,17 @@ CMAKE_BINARY_DIR = /Users/jakeanderson/projects/Orderbook/build
 
 # The main recursive "all" target.
 all: CMakeFiles/OrderBookMain.dir/all
-all: CMakeFiles/OrderBookTest.dir/all
+all: tests/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall:
+preinstall: tests/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/OrderBookMain.dir/clean
-clean: CMakeFiles/OrderBookTest.dir/clean
 clean: googletest-build/clean
+clean: tests/clean
 .PHONY : clean
 
 #=============================================================================
@@ -129,6 +129,21 @@ googletest-build/googletest/clean: googletest-build/googletest/CMakeFiles/gtest_
 .PHONY : googletest-build/googletest/clean
 
 #=============================================================================
+# Directory level rules for directory tests
+
+# Recursive "all" directory target.
+tests/all: tests/CMakeFiles/OrderBookTest.dir/all
+.PHONY : tests/all
+
+# Recursive "preinstall" directory target.
+tests/preinstall:
+.PHONY : tests/preinstall
+
+# Recursive "clean" directory target.
+tests/clean: tests/CMakeFiles/OrderBookTest.dir/clean
+.PHONY : tests/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/OrderBookMain.dir
 
 # All Build rule for target.
@@ -153,33 +168,6 @@ OrderBookMain: CMakeFiles/OrderBookMain.dir/rule
 CMakeFiles/OrderBookMain.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookMain.dir/build.make CMakeFiles/OrderBookMain.dir/clean
 .PHONY : CMakeFiles/OrderBookMain.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/OrderBookTest.dir
-
-# All Build rule for target.
-CMakeFiles/OrderBookTest.dir/all: googletest-build/googletest/CMakeFiles/gtest.dir/all
-CMakeFiles/OrderBookTest.dir/all: googletest-build/googletest/CMakeFiles/gtest_main.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jakeanderson/projects/Orderbook/build/CMakeFiles --progress-num=4,5,6 "Built target OrderBookTest"
-.PHONY : CMakeFiles/OrderBookTest.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/OrderBookTest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jakeanderson/projects/Orderbook/build/CMakeFiles 7
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/OrderBookTest.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jakeanderson/projects/Orderbook/build/CMakeFiles 0
-.PHONY : CMakeFiles/OrderBookTest.dir/rule
-
-# Convenience name for target.
-OrderBookTest: CMakeFiles/OrderBookTest.dir/rule
-.PHONY : OrderBookTest
-
-# clean rule for target.
-CMakeFiles/OrderBookTest.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBookTest.dir/build.make CMakeFiles/OrderBookTest.dir/clean
-.PHONY : CMakeFiles/OrderBookTest.dir/clean
 
 #=============================================================================
 # Target rules for target googletest-build/googlemock/CMakeFiles/gmock.dir
@@ -285,6 +273,33 @@ gtest_main: googletest-build/googletest/CMakeFiles/gtest_main.dir/rule
 googletest-build/googletest/CMakeFiles/gtest_main.dir/clean:
 	$(MAKE) $(MAKESILENT) -f googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make googletest-build/googletest/CMakeFiles/gtest_main.dir/clean
 .PHONY : googletest-build/googletest/CMakeFiles/gtest_main.dir/clean
+
+#=============================================================================
+# Target rules for target tests/CMakeFiles/OrderBookTest.dir
+
+# All Build rule for target.
+tests/CMakeFiles/OrderBookTest.dir/all: googletest-build/googletest/CMakeFiles/gtest.dir/all
+tests/CMakeFiles/OrderBookTest.dir/all: googletest-build/googletest/CMakeFiles/gtest_main.dir/all
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/OrderBookTest.dir/build.make tests/CMakeFiles/OrderBookTest.dir/depend
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/OrderBookTest.dir/build.make tests/CMakeFiles/OrderBookTest.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jakeanderson/projects/Orderbook/build/CMakeFiles --progress-num=4,5,6 "Built target OrderBookTest"
+.PHONY : tests/CMakeFiles/OrderBookTest.dir/all
+
+# Build rule for subdir invocation for target.
+tests/CMakeFiles/OrderBookTest.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jakeanderson/projects/Orderbook/build/CMakeFiles 7
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/OrderBookTest.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jakeanderson/projects/Orderbook/build/CMakeFiles 0
+.PHONY : tests/CMakeFiles/OrderBookTest.dir/rule
+
+# Convenience name for target.
+OrderBookTest: tests/CMakeFiles/OrderBookTest.dir/rule
+.PHONY : OrderBookTest
+
+# clean rule for target.
+tests/CMakeFiles/OrderBookTest.dir/clean:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/OrderBookTest.dir/build.make tests/CMakeFiles/OrderBookTest.dir/clean
+.PHONY : tests/CMakeFiles/OrderBookTest.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

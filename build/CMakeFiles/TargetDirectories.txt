@@ -1,5 +1,4 @@
 /Users/jakeanderson/projects/Orderbook/build/CMakeFiles/OrderBookMain.dir
-/Users/jakeanderson/projects/Orderbook/build/CMakeFiles/OrderBookTest.dir
 /Users/jakeanderson/projects/Orderbook/build/CMakeFiles/test.dir
 /Users/jakeanderson/projects/Orderbook/build/CMakeFiles/edit_cache.dir
 /Users/jakeanderson/projects/Orderbook/build/CMakeFiles/rebuild_cache.dir
@@ -32,3 +31,11 @@
 /Users/jakeanderson/projects/Orderbook/build/googletest-build/googletest/CMakeFiles/install.dir
 /Users/jakeanderson/projects/Orderbook/build/googletest-build/googletest/CMakeFiles/install/local.dir
 /Users/jakeanderson/projects/Orderbook/build/googletest-build/googletest/CMakeFiles/install/strip.dir
+/Users/jakeanderson/projects/Orderbook/build/tests/CMakeFiles/OrderBookTest.dir
+/Users/jakeanderson/projects/Orderbook/build/tests/CMakeFiles/test.dir
+/Users/jakeanderson/projects/Orderbook/build/tests/CMakeFiles/edit_cache.dir
+/Users/jakeanderson/projects/Orderbook/build/tests/CMakeFiles/rebuild_cache.dir
+/Users/jakeanderson/projects/Orderbook/build/tests/CMakeFiles/list_install_components.dir
+/Users/jakeanderson/projects/Orderbook/build/tests/CMakeFiles/install.dir
+/Users/jakeanderson/projects/Orderbook/build/tests/CMakeFiles/install/local.dir
+/Users/jakeanderson/projects/Orderbook/build/tests/CMakeFiles/install/strip.dir

@@ -38,9 +38,5 @@ add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
                  ${CMAKE_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
-# Link Google Test to the test executable
-add_executable(OrderBookTest tests/orderbook_test.cpp src/orderbook.cpp)
-target_link_libraries(OrderBookTest gtest_main)
-
-# Add tests
-add_test(NAME OrderBookTest COMMAND OrderBookTest)
+# Add subdirectory for tests
+add_subdirectory(tests)
