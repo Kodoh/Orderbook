@@ -1,42 +1,37 @@
-Start testing: Jun 28 16:10 BST
+Start testing: Jul 01 16:18 BST
 ----------------------------------------------------------
 1/1 Testing: OrderBookTest
 1/1 Test: OrderBookTest
 Command: "/Users/jakeanderson/projects/Orderbook/build/tests/OrderBookTest"
 Directory: /Users/jakeanderson/projects/Orderbook/build/tests
-"OrderBookTest" start time: Jun 28 16:10 BST
+"OrderBookTest" start time: Jul 01 16:18 BST
 Output:
 ----------------------------------------------------------
-[==========] Running 3 tests from 1 test suite.
+[==========] Running 4 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 3 tests from OrderBookTest
+[----------] 4 tests from OrderBookTest
 [ RUN      ] OrderBookTest.AddBuyOrder
 [       OK ] OrderBookTest.AddBuyOrder (0 ms)
 [ RUN      ] OrderBookTest.AddAskOrder
 [       OK ] OrderBookTest.AddAskOrder (0 ms)
 [ RUN      ] OrderBookTest.LimitOrderFIFO
 Trade executed: 5 @ 90.2 (Bid ID: 8, Ask ID: 5)
-/Users/jakeanderson/projects/Orderbook/tests/orderbook_test.cpp:43: Failure
-Expected equality of these values:
-  orderBook.getLowestAskPrice()
-    Which is: 95.3
-  95.2
-[  FAILED  ] OrderBookTest.LimitOrderFIFO (0 ms)
-[----------] 3 tests from OrderBookTest (0 ms total)
+[       OK ] OrderBookTest.LimitOrderFIFO (0 ms)
+[ RUN      ] OrderBookTest.MatchOrderMarket
+Trade executed: 10 @ 100.5 (Bid ID: 13, Ask ID: 10)
+Trade executed: 10 @ 90.2 (Bid ID: 13, Ask ID: 11)
+[       OK ] OrderBookTest.MatchOrderMarket (0 ms)
+[----------] 4 tests from OrderBookTest (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 3 tests from 1 test suite ran. (0 ms total)
-[  PASSED  ] 2 tests.
-[  FAILED  ] 1 test, listed below:
-[  FAILED  ] OrderBookTest.LimitOrderFIFO
-
- 1 FAILED TEST
+[==========] 4 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 4 tests.
 <end of output>
-Test time =   0.15 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
-Test Failed.
-"OrderBookTest" end time: Jun 28 16:10 BST
+Test Passed.
+"OrderBookTest" end time: Jul 01 16:18 BST
 "OrderBookTest" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Jun 28 16:10 BST
+End testing: Jul 01 16:18 BST

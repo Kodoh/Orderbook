@@ -44,7 +44,22 @@ TEST(OrderBookTest, LimitOrderFIFO) {
     ASSERT_EQ(orderBook.getHighestBidPrice(), 50.4);
 }
 
+TEST(OrderBookTest, MatchOrderMarket) {
+    OrderBook orderBook("FIFO");
+    Order order1 = { Order::SELL, Order::LIMIT, 10, 100.5 };
+    Order order2 = { Order::SELL, Order::LIMIT, 10, 90.2 };
+    Order order3 = { Order::SELL, Order::LIMIT, 10, 95.3 };
+    Order order4 = { Order::BUY, Order::MARKET, 20};
 
+    orderBook.addOrder(order4);
+    ASSERT_EQ(orderBook.getHighestBidPrice(), std::numeric_limits<double>::max());
+    
+    orderBook.addOrder(order1);
+    orderBook.addOrder(order2);
+    orderBook.addOrder(order3);
+
+    ASSERT_EQ(orderBook.getLowestAskPrice(), 95.3);
+}
 
 
 int main(int argc, char **argv) {
