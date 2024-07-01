@@ -9,6 +9,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set_property(TARGET GTest::gtest APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 set_target_properties(GTest::gtest PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "CXX"
+  IMPORTED_LINK_INTERFACE_LIBRARIES_NOCONFIG "Threads::Threads"
   IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/libgtest.a"
   )
 
@@ -19,6 +20,7 @@ list(APPEND _cmake_import_check_files_for_GTest::gtest "${_IMPORT_PREFIX}/lib/li
 set_property(TARGET GTest::gtest_main APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 set_target_properties(GTest::gtest_main PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "CXX"
+  IMPORTED_LINK_INTERFACE_LIBRARIES_NOCONFIG "Threads::Threads;GTest::gtest"
   IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/libgtest_main.a"
   )
 
@@ -29,6 +31,7 @@ list(APPEND _cmake_import_check_files_for_GTest::gtest_main "${_IMPORT_PREFIX}/l
 set_property(TARGET GTest::gmock APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 set_target_properties(GTest::gmock PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "CXX"
+  IMPORTED_LINK_INTERFACE_LIBRARIES_NOCONFIG "Threads::Threads;GTest::gtest"
   IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/libgmock.a"
   )
 
@@ -39,6 +42,7 @@ list(APPEND _cmake_import_check_files_for_GTest::gmock "${_IMPORT_PREFIX}/lib/li
 set_property(TARGET GTest::gmock_main APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
 set_target_properties(GTest::gmock_main PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_NOCONFIG "CXX"
+  IMPORTED_LINK_INTERFACE_LIBRARIES_NOCONFIG "Threads::Threads;GTest::gmock"
   IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/libgmock_main.a"
   )
 
