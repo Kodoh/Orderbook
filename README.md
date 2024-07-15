@@ -48,3 +48,10 @@ This project implements a high-frequency trading (HFT) order book system utilizi
 ### Data Flow Diagram
 
 <img width="746" alt="image" src="https://github.com/Kodoh/Orderbook/assets/45899701/e8564ae6-0d79-41f2-94c5-28070c45c8ca">
+
+## References
+
+1. Endrias Project Final Report. Retrieved from [MIT](https://web.mit.edu/6.111/volume2/www/f2019/projects/endrias_Project_Final_Report.pdf).
+2. HFT Book Builder. Retrieved from [Columbia University](https://www.cs.columbia.edu/~sedwards/classes/2024/4840-spring/designs/HFT-Book-Builder.pdf).
+3. Virtual FPGA Lab. Retrieved from [GitHub](https://github.com/os-fpga/Virtual-FPGA-Lab?tab=readme-ov-file).
+
