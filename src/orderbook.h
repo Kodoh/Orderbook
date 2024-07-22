@@ -46,18 +46,23 @@ private:
     void executeTrade(Order& bidOrder, Order& askOrder, int quantity);
     void checkStopOrders();
 
+
+
 public:
     // Constructor
     OrderBook(const std::string& allocation);
 
     // Public member functions
     void addOrder(Order order);
+    int getQuantity(const Order &order);
     void removeOrder(const Order& order);
     void matchOrders();
     double getLowestAskPrice() const;
     double getHighestBidPrice() const;
     void dispBids();
     void dispAsks();
+    const std::map<double, std::deque<Order>>& getBids() const { return bids; }
+    const std::map<double, std::deque<Order>>& getAsks() const { return asks; }
 };
 
 #endif 

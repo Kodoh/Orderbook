@@ -23,6 +23,28 @@ TEST(OrderBookTest, AddAskOrder) {
     ASSERT_EQ(orderBook.getLowestAskPrice(), 90.2);
 }
 
+TEST(OrderBookTest, MatchProrata) {
+    OrderBook orderBook("PRORATA");
+
+    Order sellOrder1 = { Order::SELL, Order::LIMIT, 15, 100.5 };
+    Order buyOrder1 = { Order::BUY, Order::LIMIT, 10, 101.5 };
+
+    orderBook.addOrder(sellOrder1);
+    orderBook.addOrder(buyOrder1);
+
+    orderBook.dispAsks();
+    const auto& bids = orderBook.getBids();
+    const auto& asks = orderBook.getAsks();
+
+    ASSERT_TRUE(bids.empty());
+
+    ASSERT_EQ(asks.size(), 1);
+    ASSERT_EQ(asks.begin()->first, 100.5); 
+    ASSERT_EQ(asks.begin()->second.size(), 1);
+    ASSERT_EQ(asks.begin()->second.front().quantity, 5);
+    ASSERT_EQ(asks.begin()->second.front().orderId, 3);
+}
+
 TEST(OrderBookTest, LimitOrderFIFO) {
     OrderBook orderBook("FIFO");
     Order order1 = { Order::SELL, Order::LIMIT, 10, 100.5 };
