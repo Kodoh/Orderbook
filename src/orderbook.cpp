@@ -46,6 +46,10 @@ void OrderBook::checkStopOrders() {
     }
 }
 
+int OrderBook::getQuantity(const Order& order) {
+    return order.quantity;
+}
+
 double OrderBook::getLowestAskPrice() const {
     return asks.empty() ? std::numeric_limits<double>::max() : asks.begin()->first;
 }

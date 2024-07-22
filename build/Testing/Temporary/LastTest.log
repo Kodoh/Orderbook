@@ -1,37 +1,43 @@
-Start testing: Jul 01 16:18 BST
+Start testing: Jul 05 20:40 BST
 ----------------------------------------------------------
 1/1 Testing: OrderBookTest
 1/1 Test: OrderBookTest
 Command: "/Users/jakeanderson/projects/Orderbook/build/tests/OrderBookTest"
 Directory: /Users/jakeanderson/projects/Orderbook/build/tests
-"OrderBookTest" start time: Jul 01 16:18 BST
+"OrderBookTest" start time: Jul 05 20:40 BST
 Output:
 ----------------------------------------------------------
-[==========] Running 4 tests from 1 test suite.
+[==========] Running 5 tests from 1 test suite.
 [----------] Global test environment set-up.
-[----------] 4 tests from OrderBookTest
+[----------] 5 tests from OrderBookTest
 [ RUN      ] OrderBookTest.AddBuyOrder
 [       OK ] OrderBookTest.AddBuyOrder (0 ms)
 [ RUN      ] OrderBookTest.AddAskOrder
 [       OK ] OrderBookTest.AddAskOrder (0 ms)
+[ RUN      ] OrderBookTest.MatchProrata
+Trade executed: 10 @ 101.5 (Bid ID: 5, Ask ID: 5)
+Trade executed: 10 @ 100.5 (Bid ID: 4, Ask ID: 4)
+Price: 100.5
+  Order ID: 4, Quantity: 5, Timestamp: 1720208407176
+[       OK ] OrderBookTest.MatchProrata (0 ms)
 [ RUN      ] OrderBookTest.LimitOrderFIFO
-Trade executed: 5 @ 90.2 (Bid ID: 8, Ask ID: 5)
+Trade executed: 5 @ 90.2 (Bid ID: 10, Ask ID: 7)
 [       OK ] OrderBookTest.LimitOrderFIFO (0 ms)
 [ RUN      ] OrderBookTest.MatchOrderMarket
-Trade executed: 10 @ 100.5 (Bid ID: 13, Ask ID: 10)
-Trade executed: 10 @ 90.2 (Bid ID: 13, Ask ID: 11)
+Trade executed: 10 @ 100.5 (Bid ID: 15, Ask ID: 12)
+Trade executed: 10 @ 90.2 (Bid ID: 15, Ask ID: 13)
 [       OK ] OrderBookTest.MatchOrderMarket (0 ms)
-[----------] 4 tests from OrderBookTest (0 ms total)
+[----------] 5 tests from OrderBookTest (0 ms total)
 
 [----------] Global test environment tear-down
-[==========] 4 tests from 1 test suite ran. (0 ms total)
-[  PASSED  ] 4 tests.
+[==========] 5 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 5 tests.
 <end of output>
-Test time =   0.23 sec
+Test time =   0.16 sec
 ----------------------------------------------------------
 Test Passed.
-"OrderBookTest" end time: Jul 01 16:18 BST
+"OrderBookTest" end time: Jul 05 20:40 BST
 "OrderBookTest" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Jul 01 16:18 BST
+End testing: Jul 05 20:40 BST
