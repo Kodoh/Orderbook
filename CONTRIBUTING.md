@@ -37,15 +37,15 @@ We welcome contributions, whether they are bug fixes, features, or documentation
 1. Fork the repository to your GitHub account.
 2. Clone your fork to your local machine:
  ```bash
-   git clone https://github.com/your-username/Orderbook.git
+ git clone https://github.com/your-username/Orderbook.git
  ```
 3. Create a new branch for your feature or bug fix:
-   ```bash
-  git checkout -b feature/your-feature-name
-  ```
+```bash
+git checkout -b feature/your-feature-name
+```
 4. Make your changes and commit them with descriptive messages:
 ```bash
-  git commit -m "Add: Short description of the change"
+git commit -m "Add: Short description of the change"
 ```
 5. Push your changes to your fork:
 ```bash
